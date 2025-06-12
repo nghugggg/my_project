@@ -47,93 +47,82 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <form action="{{ route('cart.add_cart', ['id' => $sp->id]) }}" method="POST">
+                        <form id="addToCartForm" action="{{ route('cart.add_cart', ['id' => $sp->id]) }}" method="POST">
                             @csrf
-                        <div class="product__details__text">
-                            <h3>{{$sp->ten_sp}}</h3>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <span>( 138 reviews )</span>
-                            </div>
-                            <div class="product__details__price">{{number_format($sp->gia_km,0,",",".")}} VNĐ<span>{{number_format($sp->gia,0,",",".")}} VNĐ</span></div>
-                            <div class="product__details__button">
-                                <!-- <div class="quantity">
-                                    <span>Quantity:</span>
-                                    <div class="pro-qty">
-                                        <input name="soluong" id="soluong" type="number" value="1" min="1" required>
-                                    </div>
-                                </div> -->
-                                <div class="quantity">
-                                    <span>Quantity:</span>
-                                    <div class="pro-qty">
-                                        <input type="number" name="soluong" id="soluong" value="1" min="1">
-                                    </div>
+                            <div class="product__details__text">
+                                <h3>{{ $sp->ten_sp }}</h3>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    <span>(138 reviews)</span>
                                 </div>
-                                <button class="btn btn-danger m-1" id="addtocartbtn" type="submit">Add to cart</button>
-                                <!-- <ul>
-                                    <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                    <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
-                                </ul> -->
-                            </div>
-                            <div class="product__details__widget">
-                                <ul>
-                                    <li>
-                                        <span>Availability:</span>
-                                        <div class="stock__checkbox">
-                                            <label for="stockin">
-                                                In Stock
-                                                <input type="checkbox" id="stockin">
-                                                <span class="checkmark"></span>
-                                            </label>
+                                <div class="product__details__price">
+                                    {{ number_format($sp->gia_km, 0, ",", ".") }} VNĐ
+                                    <span>{{ number_format($sp->gia, 0, ",", ".") }} VNĐ</span>
+                                </div>
+
+                                <div class="product__details__button">
+                                    <div class="quantity">
+                                        <span>Quantity:</span>
+                                        <div class="pro-qty">
+                                            <input type="number" name="soluong" id="soluong" value="1" min="1">
                                         </div>
-                                    </li>
-                                    <li>
-                                        <!-- <span>Available color:</span>
-                                        <div class="color__checkbox">
-                                            <label for="red">
-                                                <input type="radio" name="color__radio" id="red" checked>
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            <label for="black">
-                                                <input type="radio" name="color__radio" id="black">
-                                                <span class="checkmark black-bg"></span>
-                                            </label>
-                                            <label for="grey">
-                                                <input type="radio" name="color__radio" id="grey">
-                                                <span class="checkmark grey-bg"></span>
-                                            </label>
-                                        </div> -->
-                                    </li>
-                                    <li>
-                                        <span>Available size:</span>
-                                        <div class="size__btn">
-                                                @foreach ($size as $ssl)
-                                                <!-- $loop->index chứa các chỉ số index của phần tử trong vòng lặp -->
-                                                <label for="size-{{ $loop->index }}">
-                                                    <input name="size" value="{{ $ssl->size_product }}" type="radio" id="size-{{ $loop->index }}">
-                                                    {{ $ssl->size_product }}
+                                    </div>
+                                    <button class="btn btn-danger m-1" id="addtocartbtn" type="submit">Add to cart</button>
+                                </div>
+
+                                <div class="product__details__widget">
+                                    <ul>
+                                        <li>
+                                            <span>Availability:</span>
+                                            <div class="stock__checkbox">
+                                                <label for="stockin">
+                                                    In Stock
+                                                    <input type="checkbox" id="stockin">
+                                                    <span class="checkmark"></span>
                                                 </label>
-                                            @endforeach
-                                        </div>
-                                        <div id="errorMessage" style="color: red; display: none;">Vui lòng chọn size</div>
-                                        @if(session('elert'))
-                                            <div class="alert alert-danger">
-                                                {{ session('elert') }}
                                             </div>
-                                        @endif
-                                    </li>
-                                    <!-- <li>
-                                        <span>Promotions:</span>
-                                        <p>Free shipping</p>
-                                    </li> -->
-                                </ul>
+                                        </li>
+
+                                        <li>
+                                            <span>Available size:</span>
+                                            <div class="size__btn">
+                                                @foreach ($size as $ssl)
+                                                    <label for="size-{{ $loop->index }}">
+                                                        <input name="size" value="{{ $ssl->size_product }}" type="radio" id="size-{{ $loop->index }}">
+                                                        {{ $ssl->size_product }}
+                                                    </label>
+                                                @endforeach
+                                            </div>
+                                            <div id="errorMessage" style="color: red; display: none;">Vui lòng chọn size</div>
+
+                                            @if(session('elert'))
+                                                <div class="alert alert-danger">
+                                                    {{ session('elert') }}
+                                                </div>
+                                            @endif
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         </form>
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const form = document.getElementById('addToCartForm');
+                            const errorMessage = document.getElementById('errorMessage');
+
+                            form.addEventListener('submit', function (event) {
+                                const sizeSelected = document.querySelector('input[name="size"]:checked');
+                                
+                                if (!sizeSelected) {
+                                    event.preventDefault(); // Chặn gửi form
+                                    errorMessage.style.display = 'block'; // Hiện thông báo lỗi
+                                } else {
+                                    errorMessage.style.display = 'none'; // Ẩn thông báo nếu đã chọn
+                                }
+                            });
+                        });
+                        </script>
                     </div>
                     <div class="col-lg-12">
                         <div class="product__details__tab">
@@ -218,19 +207,7 @@
             </div>
         </section>
         <!-- Product Details Section End -->
-<script>
-    // let selectedSize = null;
-    const errorMessage = document.getElementsById('errorMessage');
-    const addToCartButton = document.getElementById('addtocartbtn');
 
-        addToCartButton.addEventListener('click', function (event){
-            const selectedSize = document.querySelector('input[name="size"]:checked');
-            if(!selectedSize){
-                event.preventDefault();
-                errorMessage.style.display = 'block';
-            }else{
-                errorMessage.style.display = 'none';
-            }
-        });
-</script>
+
+
 @endsection
