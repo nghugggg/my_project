@@ -219,18 +219,20 @@
         </section>
         <!-- Product Details Section End -->
 <script>
-    // let selectedSize = null;
-    const errorMessage = document.getElementsById('errorMessage');
-    const addToCartButton = document.getElementById('addtocartbtn');
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('addToCartForm');
+    const errorMessage = document.getElementById('errorMessage');
 
-        addToCartButton.addEventListener('click', function (event){
-            const selectedSize = document.querySelector('input[name="size"]:checked');
-            if(!selectedSize){
-                event.preventDefault();
-                errorMessage.style.display = 'block';
-            }else{
-                errorMessage.style.display = 'none';
-            }
-        });
+    form.addEventListener('submit', function (event) {
+        const sizeSelected = document.querySelector('input[name="size"]:checked');
+        
+        if (!sizeSelected) {
+            event.preventDefault(); // Chặn submit
+            errorMessage.style.display = 'block'; // Hiện thông báo
+        } else {
+            errorMessage.style.display = 'none'; // Ẩn nếu đã chọn
+        }
+    });
+});
 </script>
 @endsection
