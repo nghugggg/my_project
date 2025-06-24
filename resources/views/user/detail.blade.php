@@ -20,7 +20,7 @@
         <section class="product-details spad">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <div class="product__details__pic">
                             <!-- <div class="product__details__pic__left product__thumb nice-scroll">
                                 <a class="pt active" href="#product-1">
@@ -38,7 +38,7 @@
                             </div> -->
                             <div class="product__details__slider__content">
                                 <div class="product__details__pic__slider owl-carousel">
-                                    <img data-hash="product-1" class="product__big__img" src="{{asset('/uploads/product/'.$sp->hinh)}}" alt="">
+                                    <img data-hash="product-1" class="product__big__img h-100 w-100" src="{{asset('/uploads/product/'.$sp->hinh)}}" alt="">
                                     <!-- <img data-hash="product-2" class="product__big__img" src="img/product/details/product-3.jpg" alt="">
                                     <img data-hash="product-3" class="product__big__img" src="img/product/details/product-2.jpg" alt="">
                                     <img data-hash="product-4" class="product__big__img" src="img/product/details/product-4.jpg" alt=""> -->
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-7">
                         <form id="addToCartForm" action="{{ route('cart.add_cart', ['id' => $sp->id]) }}" method="POST">
                             @csrf
                             <div class="product__details__text">
@@ -207,21 +207,5 @@
             </div>
         </section>
         <!-- Product Details Section End -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('addToCartForm');
-    const errorMessage = document.getElementById('errorMessage');
 
-    form.addEventListener('submit', function (event) {
-        const sizeSelected = document.querySelector('input[name="size"]:checked');
-        
-        if (!sizeSelected) {
-            event.preventDefault(); // Chặn submit
-            errorMessage.style.display = 'block'; // Hiện thông báo
-        } else {
-            errorMessage.style.display = 'none'; // Ẩn nếu đã chọn
-        }
-    });
-});
-</script>
 @endsection
