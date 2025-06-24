@@ -44,12 +44,31 @@
                 </div>
             </form>
             <script>
-                function change_address(addressId){
-                    const form = document.getElementById('addressSelectForm');
-                    const checkbox = document.getElementById(`address-${addressId}`)
+                $('#confirm-address').on('click', function (e) {
+                    e.preventDefault();
 
-                }
-                
+                    const form = $('#addressSelectForm');
+                    const formData = form.serialize();
+
+                    $.ajax({
+                        url: "{{ route('checkout.change_address') }}",
+                        method: "POST",
+                        data: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // ✅ Reload lại trang hoặc chuyển về trang thanh toán
+                                window.location.href = "{{ route('checkout.checkout_page') }}";
+                            }
+                        },
+                        error: function(xhr) {
+                            alert("Lỗi khi cập nhật địa chỉ");
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
             </script>
         </div>
     </div>
@@ -83,28 +102,30 @@
         </div>
     </div>
     <div class="container">
-        <form action="#" class="checkout__form">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0">Địa chỉ nhận hàng</h5>
-                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
-                    + Thêm địa chỉ
-                </button>
-            </div>
-            <!-- Thông tin địa chỉ -->
-            <div class="d-flex justify-content-between align-items-start border p-3 rounded bg-light mb-5">
-                @if($defaultAddress)
-                    <div id="selected-address">
-                        <p class="mb-1"><strong>{{ $defaultAddress->ho_ten }} {{ $defaultAddress->phone }}</strong></p>
-                        <p class="mb-0">{{ $defaultAddress->dc_chi_tiet }}</p>
-                        <!-- <input type="hidden" name="selected-address-id" id="selected-address-id" value="{{ $defaultAddress->id }}"> -->
-                    </div>
-                    <div>
-                        <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#changeAddressModal">
-                            Thay đổi
-                        </button>
-                    </div>
-                @endif
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Địa chỉ nhận hàng</h5>
+            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                + Thêm địa chỉ
+            </button>
+        </div>
+        <!-- Thông tin địa chỉ -->
+        <div class="d-flex justify-content-between align-items-start border p-3 rounded bg-light mb-5">
+            @if($defaultAddress)
+                <div id="selected-address">
+                    <p class="mb-1"><strong>{{ $defaultAddress->ho_ten }} {{ $defaultAddress->phone }}</strong></p>
+                    <p class="mb-0">{{ $defaultAddress->dc_chi_tiet }}</p>
+                    <!-- <input type="hidden" name="selected-address-id" id="selected-address-id" value="{{ $defaultAddress->id }}"> -->
+                </div>
+                <div>
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#changeAddressModal">
+                        Thay đổi
+                    </button>
+                </div>
+            @endif
+        </div>
+        <form action="" class="checkout__form" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="address_id" id="address_id" value="{{ $defaultAddress ? $defaultAddress->id : '' }}">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="col-lg-12">
@@ -177,7 +198,7 @@
 </section>
 <!-- Checkout Section End -->
 @endsection
-<script>
-
-</script>
+<!-- @push('scripts')
+    <script src="{{ asset('js/xuly_diachi.js') }}"></script>
+@endpush -->
 
