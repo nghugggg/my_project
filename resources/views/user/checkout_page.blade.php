@@ -47,7 +47,6 @@
                 function change_address(addressId){
                     const form = document.getElementById('addressSelectForm');
                     const checkbox = document.getElementById(`address-${addressId}`)
-
                 }
                 
             </script>
@@ -83,8 +82,7 @@
         </div>
     </div>
     <div class="container">
-        <form action="#" class="checkout__form">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Địa chỉ nhận hàng</h5>
                 <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
                     + Thêm địa chỉ
@@ -105,6 +103,7 @@
                     </div>
                 @endif
             </div>
+        <form action="#" class="checkout__form">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="col-lg-12">
