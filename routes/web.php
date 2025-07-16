@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\BuyController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 //Site
@@ -19,12 +20,19 @@ Route::get('/xoasptronggio/{id}', [BuyController::class,'xoasptronggio'])->name(
 Route::get('/xoatatca', [BuyController::class,'xoatatca'])->name('cart.remove_all')->middleware(['auth', 'verified']);
 //Route trang thanh toán
 Route::match(['get', 'post'], '/thanh-toan', [BuyController::class, 'checkout_page'])->name('checkout.checkout_page');
-// Route::post('/change-address', [BuyController::class, 'change_address'])->name('cart.change_address')->middleware(['auth', 'verified']);
 Route::post('/thanh-toan/change-address', [BuyController::class, 'change_address'])->name('checkout.change_address');
+Route::post('/add-address', [BuyController::class, 'add_address'])->name('add_address')->middleware('auth', 'verified');
+//Route đặt hàng
+Route::post('dat-hang', [OrderController::class, 'order'])->name('order.order')->middleware(['auth', 'verified']);
+//Route tài khoản
+Route::get('account-profile', [AccountController::class, 'profile_page'])->name('account.profile')->middleware('auth', 'verified');
+Route::get('account-password', [AccountController::class, 'password_page'])->name('account.password_page')->middleware('auth', 'verified');
+Route::post('account-change_password', [AccountController::class, 'change_password'])->name('account.change_password')->middleware('auth', 'verified');
+Route::get('purchase', [AccountController::class, 'purchase_page'])->name('user.purchase')->middleware('auth', 'verified');
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [AccountController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [AccountController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [AccountController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

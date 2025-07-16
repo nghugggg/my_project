@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Loai;
 use App\Models\SanPham;
 use App\Models\Size;
+use App\Models\GioHang;
 use App\Http\Controllers\ModelNotFoundException;
 Paginator::useBootstrap();
 use Illuminate\Support\Str;
@@ -23,28 +24,6 @@ use function Laravel\Prompts\table;
 
 class SiteController extends Controller
 {
-    // function __construct(Request $request)
-    // {
-    //     $danhmuc = DB::table('danhmuc')->where('anHien', 1)->orderBy('thuTu')->get();
-    //     $tongsp = 0;
-    //     $cart = '';
-    //     if (!empty($request->session()->get('cart') )) {
-    //         $cart =  $request->session()->get('cart') ;
-    //         for ( $i=0; $i<count($cart) ; $i++) {
-    //             $sp = $cart[$i];
-    //             $tongsp += (int)$sp['soluong'];
-    //         }
-    //     }else{
-    //         $cart = 0;
-    //     }
-        
-    //     View::share(['danhmuc'=> $danhmuc ,'tongsp'=> $tongsp]);
-
-    // }
-    // function __construct(Request $request){
-    //     $loai = DB::table('loai')->select('*')->where('an_hien', '!=', 0)->orderBy('id', 'asc')->get();
-    //     view::share(compact('loai'));
-    // }
     function index(){
         //Lấy danh sách loại sản phẩm
         $ds_loai = Loai::all();
@@ -125,6 +104,6 @@ class SiteController extends Controller
 
         Auth::guard('web')->logout();
 
-        return redirect('/')->with('thongbao','Bạn đã thoát tài khoản');
+        return redirect('/')->with('alert','Bạn đã thoát tài khoản');
     }
 }

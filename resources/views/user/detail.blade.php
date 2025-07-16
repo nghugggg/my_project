@@ -6,9 +6,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb__links">
-                            <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                            <a href="#">Women’s </a>
-                            <span>Essential structured blazer</span>
+                            <a href="/"><i class="fa fa-home"></i> Home</a>
+                            <!-- <a href="#">Women’s </a> -->
+                            <span>{{ $sp->ten_sp }}</span>
                         </div>
                     </div>
                 </div>
@@ -94,13 +94,7 @@
                                                     </label>
                                                 @endforeach
                                             </div>
-                                            <div id="errorMessage" style="color: red; display: none;">Vui lòng chọn size</div>
-
-                                            @if(session('elert'))
-                                                <div class="alert alert-danger">
-                                                    {{ session('elert') }}
-                                                </div>
-                                            @endif
+                                            <div id="errorMessage" style="color: #ff424f; display: none;">Vui lòng chọn Size</div>
                                         </li>
                                     </ul>
                                 </div>
@@ -181,16 +175,16 @@
                     @foreach($splienquan_arr as $splq)
                         <div class="col-lg-3 col-md-4 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="{{$splq->hinh}}">
+                                <div class="product__item__pic set-bg" data-setbg="{{asset('/uploads/product/'.$splq->hinh)}}">
                                     <!-- <div class="label new">New</div> -->
-                                    <ul class="product__hover">
+                                    <!-- <ul class="product__hover">
                                         <li><a href="img/product/related/rp-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
                                         <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                                         <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-                                    </ul>
+                                    </ul> -->
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">{{$splq->ten_sp}}</a></h6>
+                                    <h6><a href="/detail/product/{{ $splq->id }}">{{$splq->ten_sp}}</a></h6>
                                     <div class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -198,7 +192,7 @@
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    <div class="product__price">{{number_format($splq->gia_km,0,",",".")}} VNĐ</div>
+                                    <div class="product__price">{{number_format($splq->gia_km ? $splq->gia_km : $splq->gia,0,",",".")}} VNĐ</div>
                                 </div>
                             </div>
                         </div>

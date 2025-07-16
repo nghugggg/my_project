@@ -26,24 +26,6 @@ use function Laravel\Prompts\table;
 
 class BuyController extends Controller
 {
-    //     function themvaogio(Request $request, $id_sp = 0, $soluong=1){
-    //     if ($request->session()->exists('cart')==false) {//chưa có cart trong session           
-    //         $request->session()->put('cart', ['id_sp'=> $id_sp,  'soluong'=> $soluong]);          
-    //     } else {// đã có cart, kiểm tra id_sp có trong cart không
-    //         $cart =  $request->session()->get('cart'); 
-    //         $index = array_search($id_sp, array_column($cart, 'id_sp'));
-    //         if ($index!=''){ //id_sp có trong giỏ hàng thì tăhg số lượng
-    //             $cart[$index]['soluong']+=$soluong;
-    //             $request->session()->put('cart', $cart);
-    //         }
-    //         else { //sp chưa có trong array cart thì thêm vào 
-    //             $cart[]= ['id_sp'=> $id_sp, 'soluong'=> $soluong];
-    //             $request->session()->put('cart', $cart);
-    //         }    
-    //     }        
-    //     //$request->session()->forget('cart');
-    //     return redirect('hiengiohang');
-    // }
     function themvaogio(Request $request, $id){
         //Lấy dữ liệu từ request
         $sanpham = SanPham::findOrFail($id);
@@ -152,7 +134,6 @@ class BuyController extends Controller
             return redirect()->route('login')->with('error', 'Bạn chưa đăng nhập');
         }
         $userId = Auth::id();
-        // $selectedItemString = $request->input('selected_products', '');
 
         if($request->isMethod('post')){
             $selectedItems = $request->input('selected_products', []);
@@ -191,7 +172,25 @@ class BuyController extends Controller
 
         return view('user.checkout_page', compact('cart', 'totalAmount', 'addressUser', 'defaultAddress'));
     }
-    public function change_address(Request $request)
+    function add_address(Request $request)
+    {
+        $userId = Auth::id();
+        $request->validate([
+            'name' => 'required|string',
+            'phone_number' => 'required|string',
+            'detail_address' => 'required|string'
+        ]);
+
+        DiaChi::create([
+            'id_user' => $userId,
+            'ho_ten' => $request->name,
+            'phone' => $request->phone_number,
+            'dc_chi_tiet' => $request->detail_address
+        ]);
+
+        return redirect()->back()->with('alert', 'Đã thêm địa chỉ mới');
+    }
+    function change_address(Request $request)
     {
         $userId = Auth::id(); 
         $selectedId = $request->input('selectedAddress');
@@ -206,6 +205,4 @@ class BuyController extends Controller
             // 'html' => route('checkout.checkout_page')
         ]);
     }
-
-
 }

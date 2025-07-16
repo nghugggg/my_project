@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/style.css')}}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-BxU+yFqR0r44gCeMYYZDCu6oJrZAlUpw2eU2u7KKP6X2HjBrcWL3KxM1qocT0Y5Qv5wduoEf5jKObMeRhP1O3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -59,34 +60,46 @@
 
     <!-- Header Section Begin -->
     <header class="header">
+        @if(session()->has('alert'))
+        <div class="z-1 toast show align-items-center text-bg-dark border-0 position-fixed top-3 end-0 p-3" role="alert"
+            aria-live="assertive" aria-atomic="true" id="toast-container">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-body">
+                    {!! session('alert') !!}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a class="w-50" href="/"><img src="/img/levents_logo.png" alt=""></a>
+                        <a class="w-50" href="/"><img src="img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="/">Home</a></li>
-                            <li><a href="./shop.html">Shop</a>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="#">Shop</a>
                                 <ul class="dropdown">
                                     @foreach($loai as $l)
-                                    <li><a href="/sp_danhmuc/{{$l->id}}">{{$l->ten_loai}}</a></li>
+                                    <li><a href=#>{{$l->ten_loai}}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
+                            <li><a href="/">Pages</a>
+                                <!-- <ul class="dropdown">
                                     <li><a href="/">Product Details</a></li>
                                     <li><a href="./shop-cart.html">Shop Cart</a></li>
                                     <li><a href="./checkout.html">Checkout</a></li>
                                     <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
+                                </ul> -->
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="/">Blog</a></li>
+                            <li><a href="/">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -94,8 +107,20 @@
                     <div class="header__right">
                         <div class="header__right__auth">
                             @if(Auth::check())
-                            {{Auth::user()->name}}
-                            <a href="/logoutt">Log out</a>
+                            <div class="dropdown">
+                                <a class="d-flex align-items-center gap-2 dropdown-toggle text-decoration-none" href="{{ route('account.profile') }}" role="button"
+                                id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-circle-user fa-lg"></i>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="{{ route('account.profile') }}">Tài khoản của tôi</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('user.purchase') }}">Đơn hàng</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="/logoutt">Đăng xuất</a></li>
+                                </ul>
+                            </div>
                             @else
                             <a href="/login">Login</a>
                             <a href="/register">Register</a>
@@ -106,12 +131,12 @@
                             <li><span class="icon_search search-switch"></span></li>
                             <li>
                                 <a href="#"><span class="icon_heart_alt"></span>
-                                    <div class="tip">2</div>
+                                    <!-- <div class="tip">2</div> -->
                                 </a>
                             </li>
                             <li>
                                 <a href="/hiengiohang"><span class="icon_bag_alt"></span>
-                                    <div class="tip"> @yield('tongsp') </div>
+                                    <!-- <div class="tip"></div> -->
                                 </a>
                             </li>
                         </ul>
@@ -134,7 +159,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-7">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="#"><img src="img/logo.png" alt=""></a>
                         </div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                             cilisis.</p>

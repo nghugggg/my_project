@@ -1,7 +1,4 @@
 @extends('user.layout')
-
-
-
 @section('noidung')
 <!-- Shop Cart Section Begin -->
 <section class="shop-cart spad">
@@ -68,7 +65,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="cart__btn">
-                    <a href="">Tiếp tục mua sắm</a>
+                    <a href="/">Tiếp tục mua sắm</a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -95,7 +92,7 @@
                             Tổng cộng (0 sản phẩm): <span id="total-amount">0 VNĐ</span>
                         </li>
                     </ul>
-                    <button type="submit" class="primary-btn">Thanh toán</button>
+                    <button type="submit" class="primary-btn w-100">Thanh toán</button>
                 </div>
             </div>
         </div>
