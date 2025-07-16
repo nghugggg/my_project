@@ -19,7 +19,8 @@ Route::get('/xoasptronggio/{id}', [BuyController::class,'xoasptronggio'])->name(
 Route::get('/xoatatca', [BuyController::class,'xoatatca'])->name('cart.remove_all')->middleware(['auth', 'verified']);
 //Route trang thanh toán
 Route::match(['get', 'post'], '/thanh-toan', [BuyController::class, 'checkout_page'])->name('checkout.checkout_page');
-Route::post('/change-address', [BuyController::class, 'change_address'])->name('checkout.change_address')->middleware(['auth', 'verified']);
+// Route::post('/change-address', [BuyController::class, 'change_address'])->name('cart.change_address')->middleware(['auth', 'verified']);
+Route::post('/thanh-toan/change-address', [BuyController::class, 'change_address'])->name('checkout.change_address');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

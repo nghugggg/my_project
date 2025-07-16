@@ -191,16 +191,21 @@ class BuyController extends Controller
 
         return view('user.checkout_page', compact('cart', 'totalAmount', 'addressUser', 'defaultAddress'));
     }
-    function change_address(Request $request)   {
+    public function change_address(Request $request)
+    {
         $userId = Auth::id(); 
-        $selectedId = $request->address_id;
+        $selectedId = $request->input('selectedAddress');
 
-        // Đặt tất cả địa chỉ của user về mặc định = 0
-        DiaChi::where('user_id', $userId)->update(['is_default_address' => 0]);
+        DiaChi::where('id_user', $userId)->update(['is_default_address' => 0]);
+        DiaChi::where('id_user', $userId)->where('id', $selectedId)->update(['is_default_address' => 1]);
 
-        // Đặt địa chỉ được chọn thành mặc định
-        DiaChi::where('user_id', $userId)->where('id', $selectedId)->update(['is_default_address' => 1]);
+        //$html = $this->checkout_page($request)->render();
 
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            // 'html' => route('checkout.checkout_page')
+        ]);
     }
+
+
 }
